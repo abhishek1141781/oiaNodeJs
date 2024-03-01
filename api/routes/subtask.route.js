@@ -10,12 +10,10 @@ import { verifyToken } from "../utils/verifyUser.js";
 // SUBTASK ROUTE
 const subtaskRouter = express.Router();
 
-// ENSURE TRY CATCH IN ALL METHODS
-
 // update the updated_at and created_at fields while updating and createing subtasks
 // this is automatic i guess
 
-// CREATE UTILITY FUNCTION FOR FOLLOWING
+// CREATE UTILITY METHOD FOR FOLLOWING
 // 1. IF SUBTASK ID EXISTS AND IS OF CURRENT USER
 // 2. IF TASK ID EXISTS AND IS OF CURRENT USER
 // 3. AND OTHER REPETITIVE TASKS

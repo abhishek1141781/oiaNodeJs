@@ -1,8 +1,8 @@
 import cron from "node-cron";
 import Task from "../models/task.model.js";
 import { setTaskPriority } from "../utils/priority.js";
-import { initiateTwilioCall } from "./twilio.js";
 import User from "../models/user.model.js";
+import { initiateTwilioCall } from "../utils/twilio.js";
 
 export const dailyPriorityUpdateBasedOnDueDate = (next) => {
   //   console.log("node cron entered");
