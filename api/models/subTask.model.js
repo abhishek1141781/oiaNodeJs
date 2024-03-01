@@ -1,10 +1,12 @@
 import mongoose from "mongoose";
 
+const { Schema } = mongoose;
+
 const subTaskSchema = new mongoose.Schema(
   {
     status: {
       type: Number,
-      enum: [0,1],  // 0-incomplete, 1-completed
+      enum: [0, 1], // 0-incomplete, 1-completed
       default: 0,
       required: true,
     },
@@ -20,6 +22,9 @@ const subTaskSchema = new mongoose.Schema(
       type: Schema.Types.ObjectId,
       ref: "Task",
       required: true,
+    },
+    deleted_at: {
+      type: Date,
     },
   },
   { timestamps: true }

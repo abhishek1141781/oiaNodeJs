@@ -22,3 +22,16 @@ MongooseError: The `uri` parameter to `openUri()` must be a string, got "undefin
 ```
 Solved:    moved .env to root of the project directory, since undefined so it's not finding the file itself
 
+```log
+    "message": "Cannot read properties of undefined (reading 'access_token')"
+```
+Solved:
+installed the package:
+npm i cookie-parser
+
+app.use in index.js
+
+```log
+(node:27808) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 exit listeners added to [Bus]. Use emitter.setMaxListeners() to increase limit
+(Use `node --trace-warnings ...` to show where the warning was created)
+```

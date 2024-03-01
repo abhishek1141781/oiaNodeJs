@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+const { Schema } = mongoose; // Import Schema from mongoose
 
 const taskSchema = new mongoose.Schema(
   {
@@ -19,14 +20,15 @@ const taskSchema = new mongoose.Schema(
       type: String,
       enum: ["TODO", "IN_PROGRESS", "DONE"],
       required: true,
+      default: "TODO",
     },
     priority: {
       type: Number,
       enum: [0, 1, 2, 3],
-    // 0 - Due date is today
-    // 1 - Due date is between tomorrow and day after tomorrow // 1-2
-    // 2 - 3-4
-    // 3 - 5+
+      // 0 - Due date is today
+      // 1 - Due date is between tomorrow and day after tomorrow // 1-2
+      // 2 - 3-4
+      // 3 - 5+
       required: true,
     },
     // soft delete
@@ -39,6 +41,9 @@ const taskSchema = new mongoose.Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
+    },
+    deleted_at: {
+      type: Date,
     },
   },
   { timestamps: true }

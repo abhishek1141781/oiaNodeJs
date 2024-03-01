@@ -5,6 +5,7 @@ import {
 } from "../controllers/user.controller.js";
 import { verifyToken } from "../utils/verifyUser.js";
 
+// USER ROUTE
 const userRouter = express.Router();
 
 userRouter.get("/test", test);
