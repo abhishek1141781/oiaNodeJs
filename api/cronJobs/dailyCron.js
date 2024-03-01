@@ -1,14 +1,16 @@
 import cron from "node-cron";
 import Task from "../models/task.model.js";
 import { setTaskPriority } from "../utils/priority.js";
+import { initiateTwilioCall } from "./twilio.js";
+import User from "../models/user.model.js";
 
 export const dailyPriorityUpdateBasedOnDueDate = (next) => {
-//   console.log("node cron entered");
+  //   console.log("node cron entered");
   // Run every day at midnight (00:00) in IST timezone
   cron.schedule(
     "* * * * *",
     async () => {
-        // console.log("cron job started 1");
+      // console.log("cron job started 1");
       try {
         // console.log("cron job started 2");
         // Update priorities based on due dates
@@ -20,7 +22,7 @@ export const dailyPriorityUpdateBasedOnDueDate = (next) => {
         for (const task of tasks) {
           // Calculate the updated priority based on the task's due date
           const updatedPriority = setTaskPriority(task.due_date);
-        //   console.log(task);
+          //   console.log(task);
 
           // Set the updated priority to the task object
           task.priority = updatedPriority;
@@ -38,4 +40,107 @@ export const dailyPriorityUpdateBasedOnDueDate = (next) => {
       timezone: "Asia/Kolkata", // Set timezone to IST
     }
   );
+};
+
+// DAILY RUN CHECK FOR DUE DATE PASSED
+
+// Function to start the cron job
+// // Function to start the cron job
+// export const startVoiceCallCron = () => {
+//   // Run the cron job every minute
+//   cron.schedule("* * * * *", async () => {
+//     try {
+//       console.log("Checking for overdue tasks...");
+
+//       // Query overdue tasks from the database
+//       const overdueTasks = await Task.find({ due_date: { $lt: new Date() } });
+
+//       // Sort overdue tasks based on user priority (ascending order)
+//       overdueTasks.sort((taskA, taskB) => {
+//         const priorityA = taskA.createdBy.priority;
+//         const priorityB = taskB.createdBy.priority;
+
+//         return priorityA - priorityB;
+//       });
+
+//       // Iterate over the sorted overdue tasks
+//       for (const task of overdueTasks) {
+//         // Retrieve the associated user's priority
+//         const user = await User.findById(task.createdBy);
+
+//         // Initiate a call using Twilio
+//         const callStatus = await initiateTwilioCall(user.phone_number);
+
+//         // If call is not attended, log and move to the next task
+//         if (!callStatus.success) {
+//           console.log(`Call to user ${user.phone_number} (Priority ${priority}) was not attended.`);
+//         } else {
+//           // Call attended, break the loop
+//           console.log(`Call to user ${user.phone_number} (Priority ${priority}) was attended.`);
+//           break;
+//         }
+//       }
+//     } catch (error) {
+//       console.error("Error occurred during voice call cron job:", error);
+//     }
+//   });
+// };
+
+// DAILY RUN CHECK FOR DUE DATE PASSED
+
+// Function to start the cron job for voice calling
+export const startVoiceCallCron = (next) => {
+  // Run the cron job every minute
+  cron.schedule("* * * * *", async () => {
+    try {
+      console.log("Checking for overdue tasks...");
+
+      // Query overdue tasks from the database
+      const overdueTasks = await Task.find({ due_date: { $lt: new Date() } });
+
+      // Sort overdue tasks based on user priority (ascending order)
+      overdueTasks.sort((taskA, taskB) => {
+        const priorityA = taskA.createdBy.priority;
+        const priorityB = taskB.createdBy.priority;
+        return priorityA - priorityB;
+      });
+
+      // Iterate over the sorted overdue tasks
+      for (const task of overdueTasks) {
+        // Retrieve the associated user's phone number
+        const user = await User.findById(task.createdBy);
+        let phoneNumber = user.phone_number;
+
+        console.log(typeof phoneNumber);
+
+        // convert phone no to string, add +91
+        phoneNumber = String(phoneNumber);
+        // Add +91 country code to the phone number if it's not already included
+        const formattedPhoneNumber = phoneNumber.startsWith("+")
+          ? phoneNumber
+          : `+91${phoneNumber}`;
+
+        // convert back into number and move ahead
+        phoneNumber = Number(formattedPhoneNumber);
+
+
+        console.log("here 0");
+
+        // Initiate a call using Twilio
+        const callStatus = await initiateTwilioCall(phoneNumber);
+
+        // If call is not attended, log and move to the next task
+        if (!callStatus.success) {
+          console.log(`Call to user ${phoneNumber} was not attended.`);
+        } else {
+          // Call attended, break the loop
+          console.log(`Call to user ${phoneNumber} was attended.`);
+          break;
+        }
+      }
+    } catch (error) {
+      console.error("Error occurred during voice call cron job:", error);
+      next(error);
+    }
+  });
 };

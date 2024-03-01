@@ -6,7 +6,7 @@ import authRouter from "./routes/auth.route.js";
 import userRouter from "./routes/user.route.js";
 import taskRouter from "./routes/task.route.js";
 import subtaskRouter from "./routes/subtask.route.js";
-import { dailyPriorityUpdateBasedOnDueDate } from "./cronJobs/dailyCron.js";
+import { dailyPriorityUpdateBasedOnDueDate, startVoiceCallCron } from "./cronJobs/dailyCron.js";
 // import path from 'path';
 
 dotenv.config();
@@ -67,3 +67,4 @@ app.use((err, req, res, next) => {
 
 // Called function to start the cron job
 dailyPriorityUpdateBasedOnDueDate(next => {});
+startVoiceCallCron(next => {});
