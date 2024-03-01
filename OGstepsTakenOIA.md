@@ -35,3 +35,8 @@ app.use in index.js
 (node:27808) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 exit listeners added to [Bus]. Use emitter.setMaxListeners() to increase limit
 (Use `node --trace-warnings ...` to show where the warning was created)
 ```
+
+
+intall this for cron jobs
+    npm i node-cron
+

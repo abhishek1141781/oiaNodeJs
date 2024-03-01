@@ -4,7 +4,7 @@ export const setTaskPriority = (dueDate) => {
     const differenceInDays = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
 
     // Set priority based on the calculated difference
-    if (differenceInDays === 0) {
+    if (differenceInDays <= 0) {
         return 0; // Due date is today
     } else if (differenceInDays <= 2) {
         return 1; // Due date is between tomorrow and day after tomorrow
