@@ -55,23 +55,7 @@ export const createTask = async (req, res, next) => {
   }
 };
 
-// export const getAllTasks = async (req, res, next) => {
 
-//   try {
-
-//     // get all query parameters(?due_date=2024-03-10T10:00:00.000Z&priority=2)
-//     // note here priority is user table priority and not priority of Task table, as it is indirectly related to task due_date column, which is already taken into consideration
-
-//     // get current userId
-
-//     // launch a search in the db for all tasks of current user with the given filters as defined by the query parameters with default of due_date of today, and pririty of 0
-
-//     // pagainate the results with page number & page size also passed as a query param, with a default of 3 results per page and page number of 1 if value not passed
-
-//   } catch (error) {
-//     next(error)
-//   }
-// };
 
 export const getAllTasks = async (req, res, next) => {
   try {
@@ -147,62 +131,6 @@ export const getAllTasks = async (req, res, next) => {
   }
 };
 
-// UPDATE TASK
-
-// export const updateTask = async (req, res, next) => {
-
-//   // check if given task_id exists, and if it belongs to the current user
-//       // Extract the subtaskId from the URL path parameters
-//       const { taskId } = req.params;
-
-//       // Check if the task exists
-//       const task = await Task.findById(subtaskId);
-//       if (!task) {
-//         return next(
-//           errorHandler(
-//             404,
-//             "Task not found. Please provide a valid task ID."
-//           )
-//         );
-//       }
-
-//       // Check if the taskId belongs to the current user
-//       if (task.createdBy.toString() !== req.user.id) {
-//         return next(errorHandler(403, "Unauthorized access"));
-//       }
-
-//       //  Extract the data sent by the user in req.body
-//       const{ due_date, status } = req.body;
-
-//       // validate the incoming data sent by user, check if due_date is after today's date and it's format is correct, and that status is one of "TODO", "DONE" but not IN_PROGRESS as that would be automatically done by udpateing a subtask
-
-//       //  Update fields that were provided
-//       task.due_date = due_date ? due_date : task.due_date;
-//       task.status = status ? status : task.status;
-//       // task.updatedAt = Date.now();
-
-//       // set new updated priority after new due_date
-//       await setTaskPriority(task.due_date);
-
-//       // save to db
-//       await task.save();
-
-// Update the status of the corresponding subtasks
-// await updateSubtaskStatus(task.createdBy);
-// CREATE A UTILITY METHOD:
-// 1. status can only be updated to TODO or DONE=> if it's TODO, set all subtasks statuses to 0, if its DONE, set all subtask statuses to 1
-// 2. update new task priority based on new due_date
-
-//       // Return the updated task object
-//       res.status(200).json(task);
-
-//   try {
-
-//   } catch (error) {
-//     next(error)
-//   }
-
-// };
 
 export const updateTask = async (req, res, next) => {
   try {

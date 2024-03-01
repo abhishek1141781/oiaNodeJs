@@ -11,9 +11,6 @@ const twilioClient = twilio(accountSid, authToken);
 // Function to initiate a Twilio voice call
 export const initiateTwilioCall = async (phoneNumber) => {
   try {
-    console.log("i was here 1");
-
-    console.log(" here 2");
     const call = await twilioClient.calls.create({
       url: "http://demo.twilio.com/docs/voice.xml",
     //   add +91 to the phone number

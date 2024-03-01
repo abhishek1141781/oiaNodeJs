@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
 
 export const signup = async (req, res, next) => {
-  // const { username, email, password } = req.body;
   const { phone_number, priority } = req.body;
 
   // before creating user check if phone no already exists, if yes throw error

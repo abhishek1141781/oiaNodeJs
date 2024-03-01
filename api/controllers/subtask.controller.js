@@ -9,23 +9,6 @@ import { isThisMySubtask } from "../utils/taskOwnedBy.js";
 
 // SUBTASK CONTROLLER
 
-// export const createSubtask = async (req, res, next) => {
-//   // extract task_id from req.body
-//   const { task_id } = req.body;
-//   const { userId } = req.user.id;
-
-//   // check if the taskID exists else throw error
-
-//   // check if the taskId given is created by the current user itself else throw error
-
-//   // create a new subtask
-
-//   // save it to database and return
-//   try {
-//   } catch (error) {
-//     next(error);
-//   }
-// };
 
 export const createSubtask = async (req, res, next) => {
   try {
