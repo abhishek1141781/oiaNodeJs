@@ -54,13 +54,3 @@ export const signout = async (req, res, next) => {
     next(error);
   }
 };
-
-
-export const test = async (req, res, next) => {
-  try {
-    console.log("Hello chal gya");
-    res.status(200).json("passed");
-  } catch (error) {
-    next(error)
-  }
-}

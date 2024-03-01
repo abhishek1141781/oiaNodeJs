@@ -20,3 +20,5 @@ npm i jsonwebtoken
 ```log
 MongooseError: The `uri` parameter to `openUri()` must be a string, got "undefined". Make sure the first parameter to `mongoose.connect()` or `mongoose.createConnection()` is a string.
 ```
+Solved:    moved .env to root of the project directory, since undefined so it's not finding the file itself
+
